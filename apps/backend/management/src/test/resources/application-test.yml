@@ -1,11 +1,11 @@
 spring:
-  datasource:
-    url: jdbc:postgresql://${TEST_DB_HOST:localhost}:${TEST_DB_PORT:5434}/${TEST_DB_NAME:lapalma_test}
-    username: ${TEST_DB_USER}
-    password: ${TEST_DB_PASSWORD}
-
   jpa:
     show-sql: false
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
 
 logging:
   level:
