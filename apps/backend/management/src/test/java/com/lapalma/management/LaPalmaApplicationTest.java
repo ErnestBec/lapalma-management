@@ -1,4 +1,4 @@
-package com.lapalma;
+package com.lapalma.management;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.lapalma.config.PostgresTestConfig;
 import com.lapalma.management.ManagementApplication;
+import com.lapalma.management.config.PostgresTestConfig;
 
 
 

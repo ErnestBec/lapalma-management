@@ -1,4 +1,4 @@
-package com.lapalma.modules.inventory.application;
+package com.lapalma.management.modules.inventory.application;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -24,7 +25,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import com.lapalma.management.modules.inventory.application.InventoryService;
 import com.lapalma.management.modules.inventory.domain.Stock;
 import com.lapalma.management.modules.inventory.infrastructure.StockRepository;
 
@@ -50,6 +50,22 @@ public class InventoryServiceTest {
     //Objeto real, ejecutamos su lógica (crea un servicio y le proporciona ese repositorio simulado)
     private InventoryService inventoryService;
 
+    @ParameterizedTest 
+    @ValueSource (ints = {0, -1, -10, -100})
+    void shouldRejectInvalidSaleQuantities(int quantity){
+        
+        //Arrage
+        Long productId = 1L;
+
+        //Assert & Act
+        assertThrows(IllegalArgumentException.class, 
+            () -> inventoryService.canSell(productId, quantity)
+        );
+
+        verifyNoInteractions(stockRepository);
+
+    }
+
    //Parametriza el test
     @ParameterizedTest 
     //El test se ejecutara tantas veces exista una cantidad en el arreglo de parametros
@@ -70,6 +86,52 @@ public class InventoryServiceTest {
 
         verify(stockRepository)
         .findByProductId(productId);
+    }
+
+    //Nos ayuda que en cada prueba se muestre una descrición más clara de lo que se ejecuta
+    @ParameterizedTest(name = "Stock {0}, solicitud {1} => {2}") 
+    // Los datos de esta prueba se definen como: "Resultado esperado, Cantidad solicitada, Existencias disponibles"
+    @CsvSource({
+        "20, 5, true",
+        "20, 20, true",
+        "20, 21, false",
+        "3, 8, false",
+        "50, 10, true",
+    }) 
+    void shouldValidateStockAvailability(
+        int availableStock,
+        int requestQuantity,
+        boolean expectedResult
+    ){
+        //Arrage
+        Long productId = 1L;
+
+        when(stockRepository.findByProductId(productId))
+        .thenReturn(Optional.of(new Stock(productId, availableStock)));
+
+        //Act
+        boolean result = inventoryService.canSell(productId, requestQuantity);
+
+        //Assert
+        assertEquals(expectedResult, result);
+
+    }
+
+    @ParameterizedTest 
+    @ValueSource(ints = {0, -1, -5, -10, -100})
+    void shouldRejectInvalidStocjEntries(int quantity){
+        //Arrage
+        Long productId= 1L;
+
+        //Act & Assert
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> inventoryService.addStock(productId, quantity)
+        );
+
+            // En esta pruab no se uso when por que no se queria simular nada, se queria hacer uso de la respuesta del mismo servicio
+
+        verifyNoInteractions(stockRepository);
     }
 
     @Test 
