@@ -8,19 +8,15 @@ import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 
-import javax.print.attribute.standard.Media;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
-import com.lapalma.management.catalog.api.ProductResponse;
-import com.lapalma.management.catalog.api.ProductController;
-import com.lapalma.management.catalog.api.CreateProductRequest;
 import com.lapalma.management.modules.inventory.application.ProductService;
 import com.lapalma.management.shared.exception.GlobalExceptionHandler;
 
@@ -31,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //Indica que se usara ProductController
 @WebMvcTest(ProductController.class)
 //Indica que usara el manejador global de Spring 
+@ActiveProfiles("mvc-example")
 @Import(GlobalExceptionHandler.class) 
 public class ProductControllerTest {
 

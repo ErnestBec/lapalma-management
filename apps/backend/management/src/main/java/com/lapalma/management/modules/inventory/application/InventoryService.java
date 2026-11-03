@@ -1,7 +1,7 @@
 package com.lapalma.management.modules.inventory.application;
 
+import com.lapalma.management.modules.inventory.application.port.StockRepository;
 import com.lapalma.management.modules.inventory.domain.Stock;
-import com.lapalma.management.modules.inventory.infrastructure.StockRepository;
 
 public class InventoryService {
     

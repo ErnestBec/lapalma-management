@@ -25,8 +25,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.lapalma.management.modules.inventory.application.port.StockRepository;
 import com.lapalma.management.modules.inventory.domain.Stock;
-import com.lapalma.management.modules.inventory.infrastructure.StockRepository;
 
 
 

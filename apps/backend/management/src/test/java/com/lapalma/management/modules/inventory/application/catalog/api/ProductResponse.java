@@ -1,4 +1,4 @@
-package com.lapalma.management.catalog.api;
+package com.lapalma.management.modules.inventory.application.catalog.api;
 
 import java.math.BigDecimal;
 

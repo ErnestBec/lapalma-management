@@ -1,4 +1,4 @@
-package com.lapalma.management.catalog.api;
+package com.lapalma.management.modules.inventory.application.catalog.api;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -8,6 +8,7 @@ import com.lapalma.management.modules.inventory.application.ProductService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController 
 @RequestMapping("/api/v1/products") 
+@Profile("mvc-example")
 public class ProductController {
 
     private final ProductService productService;
